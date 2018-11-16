@@ -1,14 +1,6 @@
-# docker-jupyter-keras-tools
+# Cobrain-neurohachathon container.
 
-It should have been named "Jupyter for Deep Learning, Natural Language Processing and common Data Mining".
-
-Dockerized version of Jupyter with installed Keras, TensorFlow, Theano, Sklearn, NLTK, Gensim, Pandas, etc.
-
-Versions:
-* latest tag - python 3.6 + cuda 9.0 CuDNNv7 - master branch
-* 8.0 tag - python 2.7 + cuda 8.0 CuDNNv5 - cuda8.0 branch (limited support)
-* 7.5 tag - python 2.7 + cuda 7.5 CuDNNv5 - cuda7.5 branch (unsupported!)
-* 6.5 tag - python 2.7 + cuda 6.5 - cuda6.5 branch (unsupported!)
+Dockerized version of Jupyter with installed Keras, TensorFlow, PyTorch, Sklearn, Gensim, Pandas, XGBosot, LightGBM, etc.
 
 ## Run
 
@@ -21,7 +13,7 @@ Then, run the container:
     nvidia-docker run -ti --rm \
         -v `pwd`:/notebook \
         -p 8888:8888 \
-        windj007/jupyter-keras-tools
+        inemo/cobrain-neurohackathon
 
 Or, with full options and authentication (for copy-paste convenience :)):
 
@@ -31,7 +23,7 @@ Or, with full options and authentication (for copy-paste convenience :)):
         -v /folder/with/your/certs:/jupyter/certs \
         -v `pwd`:/notebook \
         -p 8888:8888 \
-        windj007/jupyter-keras-tools
+        inemo/cobrain-neurohackathon
 
 You may want to add something like **--shm-size=1024m** to the commands above, because sklearn.grid_search.GridSearchCV may fail if you train large models.
 
@@ -46,7 +38,7 @@ This by default enables all the devices.
         $(for f in /usr/lib/x86_64-linux-gnu/libcudnn.* ; do echo -n "-v $f:$f " ; done) \
         -v `pwd`:/notebook \
         -p 8888:8888 \
-        windj007/jupyter-keras-tools
+        inemo/cobrain-neurohackathon
 
 After that, jupyter notebook will be available at http://<hostname>:8888/.
 
@@ -61,29 +53,22 @@ Or, with full options and authentication (for copy-paste convenience :)):
         -v /folder/with/your/certs:/jupyter/certs \
         -v `pwd`:/notebook \
         -p 8888:8888 \
-        windj007/jupyter-keras-tools
+        inemo/cobrain-neurohackathon
 
 ## Test
-
-### Theano
-
-    nvidia-docker run -ti --rm \
-        windj007/jupyter-keras-tools \
-        /test_scripts/test_theano.py
-
 
 ### TensorFlow
 
     nvidia-docker run -ti --rm \
-        windj007/jupyter-keras-tools \
+        cobrain-neurohackathon \
         /test_scripts/test_tensorflow.py
 
 
 ## Build from Scratch
 
-    git clone https://github.com/windj007/docker-jupyter-keras-tools
-    cd docker-jupyter-keras-tools
-    docker build -t windj007/jupyter-keras-tools .
+    git clone https://github.com/iinemo/cobrain-neurohackathon.git
+    cd cobrain-neurohackathon
+    docker build -t inemo/cobrain-neurohackathon .
 
 
 ## Authentication
@@ -99,7 +84,7 @@ Use openssl to generate a self-signed certificate. If you always forget how to d
 
 Jupyter does not store plain password. It uses a hashed version instead. To make a hashed version of you password, please run:
 
-    $ docker run -ti --rm windj007/jupyter-keras-tools /hashpwd.py
+    $ docker run -ti --rm inemo/cobrain-neurohackathon /hashpwd.py
     Enter password: 
     Verify password: 
     <your hashed password>
@@ -113,6 +98,6 @@ You have to pass the hashed password and tell jupyter to enable SSL and mount a 
         -e "HASHED_PASSWORD=$YOUR_HASHED_PASSWORD" \
         -e "SSL=1" \
         -v /folder/with/your/certs:/jupyter/certs \
-        windj007/jupyter-keras-tools
+        inemo/cobrain-neurohackathon
 
 After that, you will have to access Jupyter with explicit https:// in address (Jupyter does not have automatic redirect, AFAIK, maybe I'm wrong).
