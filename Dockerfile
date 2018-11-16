@@ -23,10 +23,10 @@ RUN pip install -U pip
 RUN python -m pip install -U cython
 RUN python -m pip install -U numpy
 RUN python -m pip install -U scipy pandas gensim sklearn tensorflow-gpu
-RUN python -m pip install -U http://download.pytorch.org/whl/cu90/torch-0.3.1-cp36-cp36m-linux_x86_64.whl torchvision
+RUN python -m pip install -U torch torchvision
 RUN python -m pip install -U joblib tqdm pydot imbalanced-learn
 RUN python -m pip install -U xgboost
-RUN python -m pip install -U matplotlib plotly graphviz tensorboardX seaborn
+RUN python -m pip install -U matplotlib plotly graphviz tensorboardX seaborn pydicom scikit-image
 RUN python -m pip install -U jupyter jupyterlab jupyter_nbextensions_configurator jupyter_contrib_nbextensions
 
 RUN pyenv rehash
@@ -47,6 +47,8 @@ RUN git clone --recursive https://github.com/Microsoft/LightGBM /tmp/lgbm && \
 
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
         dpkg-reconfigure --frontend=noninteractive locales
+
+RUN echo nameserver 8.8.8.8 >> /etc/resolv.conf
 
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
