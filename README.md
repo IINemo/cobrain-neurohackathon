@@ -2,6 +2,8 @@
 
 Dockerized version of Jupyter with installed Keras, TensorFlow, PyTorch, Sklearn, Gensim, Pandas, XGBosot, LightGBM, etc.
 
+Official container for science track on cobrain-neurohackathon (Zhores supercomputer). 
+
 ## Run
 
 ### It's better to use nvidia-docker
